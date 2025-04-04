@@ -1,0 +1,328 @@
+:root {
+  --primary-color: #2a4b8d;
+  --secondary-color: #f8f9fa;
+  --accent-color: #e6b93d;
+  --text-color: #333;
+  --border-color: #ddd;
+  --success-color: #4caf50;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #f0f2f5;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.proposal-container {
+  max-width: 1000px;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Header Styles */
+.proposal-header {
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.proposal-header h1 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.proposal-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+/* Section Styles */
+.proposal-section {
+  margin-bottom: 2.5rem;
+}
+
+.proposal-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.proposal-description {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* Timeline Styles */
+.timeline-container {
+  overflow-x: auto;
+}
+
+.timeline-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.timeline-table th, 
+.timeline-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.timeline-table th {
+  background-color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.timeline-table tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.component-list {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.component-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Phase Details Styles */
+.phases-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.phase-detail {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background-color: var(--secondary-color);
+}
+
+.phase-detail h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+}
+
+.phase-detail p {
+  margin-bottom: 1rem;
+}
+
+.phase-components,
+.phase-deliverables {
+  margin-top: 1rem;
+}
+
+.phase-detail h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.phase-detail ul {
+  padding-left: 1.5rem;
+}
+
+.phase-detail li {
+  margin-bottom: 0.5rem;
+}
+
+/* Pricing Styles */
+.pricing-section {
+  background-color: rgba(42, 75, 141, 0.05);
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-top: 2rem;
+}
+
+.package-card {
+  border: 2px solid var(--accent-color);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.package-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.package-card p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.package-price {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.package-benefits h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.package-benefits ul {
+  padding-left: 1.5rem;
+}
+
+.package-benefits li {
+  margin-bottom: 0.5rem;
+}
+
+/* Next Steps Styles */
+.next-steps-list {
+  padding-left: 1.75rem;
+  margin-top: 1rem;
+}
+
+.next-steps-list li {
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
+}
+
+/* Signature Section */
+.signature-section {
+  border-top: 2px solid var(--border-color);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.signature-section h2 {
+  margin-bottom: 1rem;
+}
+
+.signature-form {
+  margin-top: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.sign-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sign-button:hover {
+  background-color: #1a3a7c;
+}
+
+.sign-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.signed-message {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid var(--success-color);
+  border-radius: 4px;
+}
+
+.signed-message p {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .proposal-container {
+    padding: 1.5rem;
+  }
+  
+  .proposal-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .price {
+    font-size: 2rem;
+  }
+}
+.payment-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e3e6f0;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.payment-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.payment-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.payment-button:hover {
+  background-color: #45a049;
+}
