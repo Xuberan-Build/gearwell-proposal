@@ -23,6 +23,10 @@ export interface Phase {
     title: string;
     clientName: string;
     description: string;
+    scope?: string[];
+    timeline?: string;
+    cost?: number;
+    terms?: string[];
     phases: Phase[];
     pricing: Pricing;
     nextSteps: string[];
