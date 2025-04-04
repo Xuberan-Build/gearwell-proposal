@@ -1,10 +1,10 @@
-import { ref, uploadString, getDownloadURL, getMetadata, updateMetadata } from "firebase/storage";
-import { doc, setDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { storage, db, auth } from "./firebase";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { storage, db } from "./firebase";
 import { v4 as uuidv4 } from 'uuid';
 
 /**
- * Securely uploads a signature to Firebase Storage with enhanced security
+ * Uploads a signature to Firebase Storage
  * @param canvas - The canvas element containing the signature
  * @param proposalId - The ID of the proposal being signed
  * @param userName - The name of the user signing the document
@@ -22,31 +22,14 @@ export const uploadSignatureToStorage = async (
     // Convert canvas to data URL (PNG format)
     const dataUrl = canvas.toDataURL("image/png");
     
-    // Create a structured path for better security and organization
-    // Format: signatures/proposalId/timestamp-signatureId.png
+    // Create a path for the signature
     const fileName = `signatures/${proposalId}/${Date.now()}-${signatureId}.png`;
     
     // Create a storage reference
     const storageRef = ref(storage, fileName);
     
-    // Set custom metadata for the file for better tracking and security
-    const metadata = {
-      contentType: 'image/png',
-      customMetadata: {
-        proposalId,
-        signerName: userName,
-        uploadedAt: new Date().toISOString(),
-        signatureId,
-      }
-    };
-    
-    // Upload the data URL as a string with metadata
-    const snapshot = await uploadString(storageRef, dataUrl, 'data_url', metadata);
-    
-    // Add content disposition to prevent direct browser rendering
-    await updateMetadata(storageRef, {
-      contentDisposition: `attachment; filename="${signatureId}.png"`
-    });
+    // Upload the data URL as a string
+    const snapshot = await uploadString(storageRef, dataUrl, 'data_url');
     
     // Get the download URL
     const downloadURL = await getDownloadURL(snapshot.ref);
@@ -60,7 +43,7 @@ export const uploadSignatureToStorage = async (
 };
 
 /**
- * Saves signature data to Firestore with additional security metadata
+ * Saves signature data to Firestore
  * @param proposalId - The ID of the proposal being signed
  * @param userName - The name of the user signing the document
  * @param signatureUrl - The download URL of the uploaded signature
@@ -74,71 +57,31 @@ export const saveSignatureData = async (
   packagePrice: number
 ): Promise<string> => {
   try {
-    // Create a unique ID for this signature record
+    // Generate a unique ID for this signature record
     const signatureId = uuidv4();
     
-    // Prepare the signature data with comprehensive metadata
+    // Prepare the signature data
     const signatureData = {
       id: signatureId,
       proposalId,
       signerName: userName,
       signatureUrl,
       packagePrice,
-      // Use server timestamp for more accurate record-keeping
       timestamp: serverTimestamp(),
       status: 'signed',
       clientInfo: {
         userAgent: navigator.userAgent,
         platform: navigator.platform,
-        language: navigator.language,
-        // Add IP address later via a secure server function
-      },
-      // For audit trail
-      eventLog: [{
-        event: 'signature_created',
-        timestamp: new Date().toISOString()
-      }]
+        language: navigator.language
+      }
     };
     
     // Save to Firestore with the custom ID
     await setDoc(doc(db, "signatures", signatureId), signatureData);
     
-    // Store a record in the proposals collection too for easier lookup
-    const proposalRef = doc(db, "proposals", proposalId);
-    const signatureRef = doc(db, "signatures", signatureId);
-    
-    // Update the proposal with the signature reference
-    await setDoc(
-      proposalRef, 
-      { 
-        status: 'signed',
-        signedBy: userName,
-        signedAt: serverTimestamp(),
-        signatureReference: signatureRef
-      }, 
-      { merge: true }
-    );
-    
-    // Return the signature document ID
     return signatureId;
   } catch (error) {
     console.error("Error saving signature data:", error);
     throw error;
-  }
-};
-
-/**
- * Validates if a signature exists for a specific proposal
- * @param proposalId - The ID of the proposal to check
- * @returns Promise with boolean indicating if the proposal has been signed
- */
-export const checkProposalSignature = async (proposalId: string): Promise<boolean> => {
-  try {
-    // Implementation would depend on your Firestore structure
-    // This is a placeholder for the validation logic
-    return false;
-  } catch (error) {
-    console.error("Error checking signature:", error);
-    return false;
   }
 };
