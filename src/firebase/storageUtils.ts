@@ -22,8 +22,9 @@ export const uploadSignatureToStorage = async (
     // Convert canvas to data URL (PNG format)
     const dataUrl = canvas.toDataURL("image/png");
     
-    // Create a path for the signature
-    const fileName = `signatures/${proposalId}/${Date.now()}-${signatureId}.png`;
+    // Create a path for the signature that includes the userName
+    const sanitizedUserName = userName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    const fileName = `signatures/${proposalId}/${Date.now()}-${sanitizedUserName}-${signatureId}.png`;
     
     // Create a storage reference
     const storageRef = ref(storage, fileName);
